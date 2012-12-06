@@ -130,6 +130,10 @@ class OpauthAppController extends AppController {
 			$config = Configure::read('Opauth');
 		}
 		
+		if (empty($this->request->params['pass']) && !empty($this->request->query['provider'])) {
+		    $config['request_uri'] = rtrim($this->here, '/') . '/' . $this->request->query['provider'];
+		}
+		
 		App::import('Vendor', 'Opauth.Opauth/lib/Opauth/Opauth');
 		$this->Opauth = new Opauth( $config, $run );
 	}
